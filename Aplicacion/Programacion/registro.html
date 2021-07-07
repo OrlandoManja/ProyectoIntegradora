@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acceso a Usuario</title>
+    <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
+    <script type="text/javascript" src="JS/funciones.js"></script>
+</head>
+<body>
+    <fieldset>
+        <img src="imagen.jpeg">
+        <h1>Trabaj-APP</h1>
+        <div class="login">
+            <div class="login-triangle"></div>
+            <legend class="login-header">Registro</legend>
+            <form method="post" action="#" name="frmlogin" class="login-container">
+                <div>
+                    <input type="text" name="nombre" placeholder="Nombre" />
+                </div>
+                <div>
+                    <input type="text" name="ApellidoP" placeholder="Apellido materno" />
+                </div>
+                <div>
+                    <input type="text" name="ApellidoM" placeholder="Apellido paterno" />
+                </div>
+                <div>
+                    <select name="nivel">
+                        <option value="0">Genero</option>
+                        <option value="1">Hombre</option>
+                        <option value="2">Mujer</option>
+                        <option value="3">Prefiero no decir</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="text" name="edad" placeholder="Edad" />
+                </div>
+                <div>
+                    <input type="text" name="cel_local" placeholder="numero de telefono local" />
+                </div>
+                <div>
+                    <input type="text" name="tel_cel" placeholder="numero de telefono celular" />
+                </div>
+                <div>
+                    <input type="email" name="txtuser" placeholder="nombre@correo.com">
+                </div>
+                <div>
+                    <input type="password" name="txtpass" id="password" placeholder="********">
+                </div>
+                <div>
+                    <input type="button" value="Registrar" onclick="validar();">
+                </div>
+                <h6><a href="login.html">Regresar</a></h6>
+            </form>
+        </div>
+    </fieldset>
+</body>
+</html>
