@@ -1,0 +1,33 @@
+--SSCRIPt DEL PROYECTO INTEGRADORA.
+
+--CREACIÓN DE LA BASE DE DATOS.
+create database pro_integradora;
+\c pro_integradora;
+
+--CREACIÓN DE LAS TABLAS.
+create table USUARIO(id_usuario int primary key, estatus varchar(12) default 'En proseso', foto_perfil varchar(30) not null, nom_usuario varchar(30) not null, ap_pat_usuario varchar(30) not null, ap_mat_usuario varchar(30) not null, sexo varchar(8) not null, edad int not null, email varchar(50) unique not null, contraseña varchar(18) not null, num_tel_local bigint not null, num_tel_celular bigint unique not null, fecha_registro date not null, constraint edad_check check(edad>=18));
+
+create table ADMINISTRADOR(id_administrador int primary key, id_usuario int, id_administrador_dar_alta int, foreign key(id_usuario) references USUARIO(id_usuario) on delete cascade on update cascade, foreign key(id_administrador_dar_alta) references ADMINISTRADOR(id_administrador) on delete cascade on update cascade);
+
+create table PRESTADOR(id_prestador int primary key, id_usuario int, foreign key(id_usuario) references USUARIO(id_usuario) on delete cascade on update cascade);
+
+create table CLIENTE(id_cliente int primary key, id_usuario int, foreign key(id_usuario) references USUARIO(id_usuario) on delete cascade on update cascade);
+
+create table BLOQUEO(clave_bloqueo int primary key, tipo_bloqueo varchar(30) not null, motivo_bloqueo varchar(50) not null, tiempo_bloqueo int not null, fecha_bloqueo date not null, fecha_inicio_bloqueo date not null, fecha_fin_bloqueo date not null, id_administrador int, id_usuario int, foreign key(id_administrador) references ADMINISTRADOR(id_administrador) on delete cascade on update cascade, foreign key(id_usuario) references USUARIO(id_usuario) on delete cascade on update cascade);
+
+create table chamba(clave_chamba int primary key, tipo_chamba varchar(30) not null, desc_chamba varchar(50) default 'Sin descripción', id_prestador int, foreign key(id_prestador) references PRESTADOR(id_prestador) on delete cascade on update cascade);
+
+create table TRABAJO(clave_trabajo int primary key, estatus varchar(12) default 'En proseso', tipo_trabajo varchar(30) not null, desc_trabajo varchar(50) default 'Sin descripción', id_prestador int, id_cliente int, foreign key(id_prestador) references PRESTADOR(id_prestador) on delete cascade on update cascade, foreign key(id_cliente) references CLIENTE(id_cliente) on delete cascade on update cascade);
+
+create table SERVICIO(clave_servicio int primary key, estatus varchar(12) default 'En proseso', tipo_servicio varchar(30) not null, desc_servicio varchar(50) default 'Sin descripción', id_cliente int, id_prestador int, foreign key(id_cliente) references CLIENTE(id_cliente) on delete cascade on update cascade, foreign key(id_prestador) references PRESTADOR(id_prestador) on delete cascade on update cascade);
+
+create table NORMAL(clave_servicio int primary key, foreign key(clave_servicio) references SERVICIO(clave_servicio) on delete cascade on update cascade);
+
+create table EMERGENCIA(clave_servicio int, nivel_emergencia int default '1', foreign key(clave_servicio) references SERVICIO(clave_servicio) on delete cascade on update cascade);
+
+create table QUEJA(clave_queja int primary key, tipo_queja varchar(30) not null, desc_queja varchar(50) default 'Sin descripción', fecha_queja date not null, clave_servicio int, foreign key(clave_servicio) references SERVICIO(clave_servicio) on delete cascade on update cascade);
+
+create table CONTRATO(clave_contrato int primary key, costo bigint not null, fecha_inicio date not null, fecha_fin date not null, clave_servicio int, foreign key(clave_servicio) references SERVICIO(clave_servicio));
+
+create table CASA(clave_casa int primary key, calle varchar(40) not null, num_externo int not null, num_interno int, colonia varchar(40) not null, municipio varchar(40) not null, cp int not null, estado varchar(40) not null, desc_casa varchar(50) default 'Sin descripción', referencias varchar(50) default 'Sin referencias', id_cliente int, foreign key(id_cliente) references CLIENTE(id_cliente) on delete cascade on update cascade);
+
